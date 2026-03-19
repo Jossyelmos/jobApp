@@ -1,0 +1,33 @@
+POST http://localhost:3000/jobs
+Content-Type: application/json
+
+{
+    "jobTitle": "Scopper",
+    "company": "Scopper International",
+    "jobLink": "www.scupper.com",
+    "status": "offer",
+    "resume": "my-cv-scupper",
+    "coverLetter": "Scupper cover letter"
+}
+
+### Get all applications available
+GET http://localhost:3000/jobs
+
+### get single applications with id
+GET http://localhost:3000/jobs/69bbe86ec5ff540d8497267c
+
+### edit job application with id
+PUT http://localhost:3000/jobs/69bbe988c5ff540d8497267e
+Content-Type: application/json
+
+{
+    "jobTitle": "Software Developer",
+    "company": "Sovtech Digital Agency",
+    "jobLink": "www.sovtech.co.za",
+    "status": "applied",
+    "resume": "my-cv11",
+    "coverLetter": "sovtech cover letter"
+}
+
+### Delete job application
+DELETE http://localhost:3000/jobs/69bbe988c5ff540d8497267e
