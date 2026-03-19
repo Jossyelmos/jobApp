@@ -3,10 +3,14 @@ const Validator = require('validatorjs');
 const validateJob = (req, res, next) => {
   const data = req.body;
 
+  if (req.body.jobLink && !req.body.jobLink.startsWith('http')) {
+    req.body.jobLink = 'https://' + req.body.jobLink;
+  }
+
   const rules = {
     jobTitle: 'required|string|min:2|max:50',
     company: 'required|string|min:2|max:50',
-    jobLink: 'required|string',
+    jobLink: 'required|url',
     status: 'in:applied,interview,rejected,offer',
     resume: 'required|string',
     coverLetter: 'string',

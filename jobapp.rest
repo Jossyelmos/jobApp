@@ -17,16 +17,16 @@ GET http://localhost:3000/jobs
 GET http://localhost:3000/jobs/69bbe86ec5ff540d8497267c
 
 ### edit job application with id
-PUT http://localhost:3000/jobs/69bbe988c5ff540d8497267e
+PUT http://localhost:3000/jobs/69bc038aff377a6fbcec8960
 Content-Type: application/json
 
 {
-    "jobTitle": "Software Developer",
-    "company": "Sovtech Digital Agency",
-    "jobLink": "www.sovtech.co.za",
-    "status": "applied",
-    "resume": "my-cv11",
-    "coverLetter": "sovtech cover letter"
+    "jobTitle": "Scopper Operator",
+    "company": "Scopper Limited",
+    "jobLink": "www.scopper.co.ng",
+    "status": "rejected",
+    "resume": "my-cv-scopper",
+    "coverLetter": ""
 }
 
 ### Delete job application
