@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     next();
 });
 app.get('/', (req, res) => {
-    res.json({ message: "Welcome to Job Application where your stor and track your jobs applications." });
+    res.json({ message: "Welcome to Job Application where you store and track your jobs applications." });
   });
   
 app.use('/jobs', require('./routes/jobs'));
