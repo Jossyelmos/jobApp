@@ -28,24 +28,29 @@ const getSingleJob = async (req, res) => {
 };
 
 
-const createJob = async(req, res) => {
-    const {jobTitle, company, jobLink, status, resume, coverLetter, dateApplied} = req.body;
+const createJob = async (req, res) => {
+  try {
+    const { jobTitle, company, jobLink, status, resume, coverLetter, dateApplied } = req.body;
 
-    let job = {};
+    const job = {
+      jobTitle,
+      company,
+      jobLink,
+      status,
+      resume,
+      coverLetter,
+      dateApplied,
+    };
 
-    job.jobTitle = jobTitle;
-    job.company = company;
-    job.jobLink = jobLink;
-    job.status = status;
-    job.resume = resume;
-    job.coverLetter = coverLetter;
-    job.dateApplied = dateApplied;
-
-    let jobModel = new Job(job);
+    const jobModel = new Job(job);
     await jobModel.save();
 
-    res.json(jobModel);
-}
+    res.status(201).json(jobModel);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
 
 
 const updateJob = async (req, res) => {
