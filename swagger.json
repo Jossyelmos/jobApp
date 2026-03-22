@@ -8,8 +8,7 @@
   "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
@@ -43,13 +42,13 @@
             "schema": {
               "type": "object",
               "properties": {
+                "jobLink": {
+                  "example": "any"
+                },
                 "jobTitle": {
                   "example": "any"
                 },
                 "company": {
-                  "example": "any"
-                },
-                "jobLink": {
                   "example": "any"
                 },
                 "status": {
@@ -116,13 +115,13 @@
             "schema": {
               "type": "object",
               "properties": {
+                "jobLink": {
+                  "example": "any"
+                },
                 "jobTitle": {
                   "example": "any"
                 },
                 "company": {
-                  "example": "any"
-                },
-                "jobLink": {
                   "example": "any"
                 },
                 "status": {

@@ -21,11 +21,11 @@ PUT http://localhost:3000/jobs/69bc038aff377a6fbcec8960
 Content-Type: application/json
 
 {
-    "jobTitle": "Scopper Operator",
+    "jobTitle": "S",
     "company": "Scopper Limited",
     "jobLink": "www.scopper.co.ng",
     "status": "rejected",
-    "resume": "my-cv-scopper",
+    "resume": "",
     "coverLetter": ""
 }
 
