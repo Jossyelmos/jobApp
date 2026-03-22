@@ -5,10 +5,10 @@
     "description": "Job Application Api",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "jobapp-0udd.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
@@ -174,16 +174,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/jobs/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
