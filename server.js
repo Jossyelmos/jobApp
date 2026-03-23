@@ -28,11 +28,6 @@ app.get('/', (req, res) => {
 app.use('/jobs', require('./routes/jobs'));
 app.use('/users', require('./routes/users'));
 
-
-const swaggerRouter = require('./routes/swagger');
-app.use('/', swaggerRouter);   // or app.use('/api-docs', swaggerRouter);
-
-
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log("Server started on " + port));
