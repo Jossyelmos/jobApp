@@ -2,7 +2,7 @@ const jobController = require('../controllers/jobs');
 const router = require('express').Router();
 const jobValdator = require("../middleware/validator");
 
-router.use('/', require('./swagger'));
+// router.use('/', require('./swagger'));
 
 // Get all contacts
 router.get('/', 

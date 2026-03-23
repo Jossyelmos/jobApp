@@ -31,3 +31,35 @@ Content-Type: application/json
 
 ### Delete job application
 DELETE http://localhost:3000/jobs/69bbe988c5ff540d8497267e
+
+
+### Get all users available
+GET http://localhost:3000/users
+
+### Create user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "Ola Flavor",
+    "email": "cruise@gmail.com",
+    "password": "123456"
+}
+
+### Get single user
+GET http://localhost:3000/users/69c00872b835d45d85ea0fcc
+
+
+### Edit a user
+PUT http://localhost:3000/users/69c00b118c3dad13a5712c93
+Content-Type: application/json
+
+{
+    "name": "Ola Flavor 2222",
+    "email": "cruise@gmail.com",
+    "password": "123456"
+}
+
+
+### Delete a user
+DELETE http://localhost:3000/users/69c00962b835d45d85ea0fd5

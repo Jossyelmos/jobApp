@@ -4,6 +4,7 @@ const connectDb = require('./database/db');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+
 const app = express();
 
 connectDb();
@@ -22,8 +23,15 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.json({ message: "Welcome to Job Application where you store and track your jobs applications." });
   });
+
   
 app.use('/jobs', require('./routes/jobs'));
+app.use('/users', require('./routes/users'));
+
+
+const swaggerRouter = require('./routes/swagger');
+app.use('/', swaggerRouter);   // or app.use('/api-docs', swaggerRouter);
+
 
 const port = process.env.PORT || 3000;
 
