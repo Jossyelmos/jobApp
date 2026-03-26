@@ -1,325 +1,257 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "JobApps Api",
-    "description": "Job Application Api",
+    "title": "JobApps API",
+    "description": "Job Application API with Authentication",
     "version": "1.0.0"
   },
   "host": "jobapp-0udd.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'"
+    },
+    "X-Auth-Token": {
+      "type": "apiKey",
+      "name": "x-auth-token",
+      "in": "header",
+      "description": "Alternative JWT header. Just paste the token string."
+    }
+  },
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "Welcome endpoint",
         "responses": {
-          "200": {
-            "description": "OK"
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "Login user and get token",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "example": "user@example.com" },
+                "password": { "example": "password123" }
+              }
+            }
           }
+        ],
+        "responses": {
+          "200": { "description": "Login successful, returns JWT token" },
+          "400": { "description": "Invalid credentials" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/auth/": {
+      "get": {
+        "description": "Get currently logged-in user info",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Returns user info" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "Logout user (client should delete token)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Logout successful, token is now client-side removed" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/users/": {
+      "post": {
+        "description": "Register new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "example": "John Doe" },
+                "email": { "example": "john@example.com" },
+                "password": { "example": "password123" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "User created" },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "get": {
+        "description": "Get all users (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Returns all users" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "put": {
+        "description": "Update currently logged-in user info (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "example": "John Doe" },
+                "email": { "example": "john@example.com" },
+                "password": { "example": "newpassword123" },
+                "date": { "example": "2026-03-26" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "User updated" },
+          "400": { "description": "Bad request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "delete": {
+        "description": "Delete currently logged-in user (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "User deleted" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "description": "Get current logged-in user info (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Returns current user info" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
         }
       }
     },
     "/jobs/": {
       "get": {
-        "description": "",
+        "description": "Get all jobs (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "Returns all jobs" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new job (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "jobLink": {
-                  "example": "any"
-                },
-                "jobTitle": {
-                  "example": "any"
-                },
-                "company": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "resume": {
-                  "example": "any"
-                },
-                "coverLetter": {
-                  "example": "any"
-                },
-                "dateApplied": {
-                  "example": "any"
-                }
+                "jobTitle": { "type": "string", "example": "Software Engineer" },
+                "company": { "type": "string", "example": "Acme Corp" },
+                "jobLink": { "type": "string", "example": "https://acme.jobs/123" },
+                "status": { "type": "string", "enum": ["applied","interview","rejected","offer"], "example": "applied" },
+                "resume": { "type": "string", "example": "https://mylink.com/resume.pdf" },
+                "coverLetter": { "type": "string", "example": "I am excited to apply..." },
+                "dateApplied": { "type": "string", "format": "date", "example": "2026-03-26" }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "description": "Job created" },
+          "400": { "description": "Bad request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
         }
       }
     },
     "/jobs/{id}": {
       "get": {
-        "description": "",
+        "description": "Get job by ID (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "Job found" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Server error" }
         }
       },
       "put": {
-        "description": "",
+        "description": "Update job by ID (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
+          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "jobLink": {
-                  "example": "any"
-                },
-                "jobTitle": {
-                  "example": "any"
-                },
-                "company": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "resume": {
-                  "example": "any"
-                },
-                "coverLetter": {
-                  "example": "any"
-                },
-                "dateApplied": {
-                  "example": "any"
-                }
+                "jobTitle": { "type": "string" },
+                "company": { "type": "string" },
+                "jobLink": { "type": "string" },
+                "status": { "type": "string", "enum": ["applied","interview","rejected","offer"] },
+                "resume": { "type": "string" },
+                "coverLetter": { "type": "string" },
+                "dateApplied": { "type": "string", "format": "date" }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "Job updated" },
+          "400": { "description": "Bad request" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Server error" }
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete job by ID (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/users/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "date": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "date": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "Job deleted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Server error" }
         }
       }
     }

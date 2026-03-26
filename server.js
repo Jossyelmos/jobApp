@@ -27,6 +27,13 @@ app.get('/', (req, res) => {
   
 app.use('/jobs', require('./routes/jobs'));
 app.use('/users', require('./routes/users'));
+app.use('/auth', require('./routes/auth'));
+
+
+const swaggerRouter = require('./routes/swagger');
+
+app.use('/api-docs', swaggerRouter);
+
 
 const port = process.env.PORT || 3000;
 

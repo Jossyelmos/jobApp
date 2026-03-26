@@ -1,65 +1,95 @@
 POST http://localhost:3000/jobs
 Content-Type: application/json
+Authorization: Bearer
 
 {
-    "jobTitle": "Scopper",
-    "company": "Scopper International",
-    "jobLink": "www.scupper.com",
+    "jobTitle": "Frontend Developer",
+    "company": "Corousel Digital Agency",
+    "jobLink": "www.carousel.com",
     "status": "offer",
-    "resume": "my-cv-scupper",
-    "coverLetter": "Scupper cover letter"
+    "resume": "my-cv-caros",
+    "coverLetter": "Carousel cover letter"
 }
 
 ### Get all applications available
 GET http://localhost:3000/jobs
+Authorization: Bearer 
 
 ### get single applications with id
-GET http://localhost:3000/jobs/69bbe86ec5ff540d8497267c
+GET http://localhost:3000/jobs/69c571235b5e48820e230c0b
+Authorization: Bearer 
 
 ### edit job application with id
-PUT http://localhost:3000/jobs/69bc038aff377a6fbcec8960
+PUT http://localhost:3000/jobs/69c571235b5e48820e230c0b
 Content-Type: application/json
+Authorization: Bearer 
 
 {
-    "jobTitle": "S",
-    "company": "Scopper Limited",
-    "jobLink": "www.scopper.co.ng",
-    "status": "rejected",
-    "resume": "",
-    "coverLetter": ""
+    "jobTitle": "Frontend Developer (Reactjs)",
+    "company": "Corousel Digital Agency",
+    "jobLink": "www.carousel.com",
+    "status": "offer",
+    "resume": "my-cv-caros",
+    "coverLetter": "Carousel cover letter"
 }
 
 ### Delete job application
-DELETE http://localhost:3000/jobs/69bbe988c5ff540d8497267e
+DELETE http://localhost:3000/jobs/69c556d55ebbb207c1bd7d5e
+Authorization: Bearer 
 
 
 ### Get all users available
 GET http://localhost:3000/users
+Authorization: Bearer 
 
 ### Create user
-POST http://localhost:3000/users
+POST http://localhost:3000/users/
 Content-Type: application/json
+Authorization: Bearer 
 
 {
-    "name": "Ola Flavor",
-    "email": "cruise@gmail.com",
+    "name": "Paul Dawson",
+    "email": "dawson@gmail.com",
     "password": "123456"
 }
 
 ### Get single user
-GET http://localhost:3000/users/69c00872b835d45d85ea0fcc
+GET http://localhost:3000/users/me
+Authorization: Bearer 
 
 
 ### Edit a user
-PUT http://localhost:3000/users/69c00b118c3dad13a5712c93
+PUT http://localhost:3000/users/
 Content-Type: application/json
+Authorization: Bearer 
 
 {
-    "name": "Ola Flavor 2222",
-    "email": "cruise@gmail.com",
-    "password": "123456"
+    "name": "Paul Dawson Grnds",
+    "email": "dawson@gmail.com",
+    "password": "1234567"
 }
 
 
 ### Delete a user
-DELETE http://localhost:3000/users/69c00962b835d45d85ea0fd5
+DELETE http://localhost:3000/users/
+Authorization: Bearer 
+
+
+### post to login a user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "flavor@gmail.com",
+    "password": "123456"
+}
+
+
+### get user
+GET http://localhost:3000/auth/
+Authorization: Bearer 
+
+
+### logout
+POST http://localhost:3000/auth/logout
+Authorization: Bearer 
