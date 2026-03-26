@@ -27,7 +27,7 @@ router.post("/", userValidator, userController.registerUser); // public
 
 // All routes protected by JWT
 router.get('/', auth, userController.getUsers);
-router.get('/me', auth, userController.getSingleUser); // current user
+router.get('/me', auth, userController.getCurrentUser); // current user
 router.put('/', auth, userValidator, userController.updateUser);
 router.delete('/', auth, userController.deleteUser);
 

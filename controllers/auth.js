@@ -16,7 +16,7 @@ const getUser = async (req, res) => {
     try {
         const user = await User.findById(req.user.userId).select('-password');
 
-        res.json({message: "Access granted", user: user });
+        res.json({message: "Access granted", user });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

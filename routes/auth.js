@@ -3,8 +3,6 @@ const router = require('express').Router();
 const authValdator = require("../middleware/authValidator");
 const auth = require('../middleware/auth');
 
-router.use('/', require('./swagger'));
-
 // Protected route (to test token)
 router.post("/login", authValdator, authController.loginUser);
 

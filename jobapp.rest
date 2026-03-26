@@ -40,7 +40,7 @@ Authorization: Bearer
 
 ### Get all users available
 GET http://localhost:3000/users
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ1NTUxMzEsImV4cCI6MTc3NDkxNTEzMX0.PIJKUmq8w9QhAqn1RR_lrYIa3Y7HIil1bIZtFylVWYA
 
 ### Create user
 POST http://localhost:3000/users/
@@ -87,7 +87,7 @@ Content-Type: application/json
 
 ### get user
 GET http://localhost:3000/auth/
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ1NTcwMTUsImV4cCI6MTc3NDkxNzAxNX0.XZhhYJBP__YzY--CQkFNUJRsJWh3MX0rslENVd2DnJo
 
 
 ### logout

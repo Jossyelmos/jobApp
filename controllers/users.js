@@ -179,7 +179,7 @@ const registerUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     // Only show current user info
-    const user = await User.findById(req.user.userId).select('-password');
+    const user = await User.find().select('-password');
     console.log(req.user);
     res.json(user);
   } catch (error) {
@@ -188,7 +188,7 @@ const getUsers = async (req, res) => {
 };
 
 // GET single user – only self
-const getSingleUser = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select('-password');
 
@@ -236,7 +236,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   registerUser,
   getUsers,
-  getSingleUser,
+  getCurrentUser,
   updateUser,
   deleteUser,
 };
