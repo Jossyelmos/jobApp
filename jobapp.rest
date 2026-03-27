@@ -1,80 +1,3 @@
-POST http://localhost:3000/jobs
-Content-Type: application/json
-Authorization: Bearer
-
-{
-    "jobTitle": "Frontend Developer",
-    "company": "Corousel Digital Agency",
-    "jobLink": "www.carousel.com",
-    "status": "offer",
-    "resume": "my-cv-caros",
-    "coverLetter": "Carousel cover letter"
-}
-
-### Get all applications available
-GET http://localhost:3000/jobs
-Authorization: Bearer 
-
-### get single applications with id
-GET http://localhost:3000/jobs/69c571235b5e48820e230c0b
-Authorization: Bearer 
-
-### edit job application with id
-PUT http://localhost:3000/jobs/69c571235b5e48820e230c0b
-Content-Type: application/json
-Authorization: Bearer 
-
-{
-    "jobTitle": "Frontend Developer (Reactjs)",
-    "company": "Corousel Digital Agency",
-    "jobLink": "www.carousel.com",
-    "status": "offer",
-    "resume": "my-cv-caros",
-    "coverLetter": "Carousel cover letter"
-}
-
-### Delete job application
-DELETE http://localhost:3000/jobs/69c556d55ebbb207c1bd7d5e
-Authorization: Bearer 
-
-
-### Get all users available
-GET http://localhost:3000/users
-Authorization: Bearer 
-
-### Create user
-POST http://localhost:3000/users/
-Content-Type: application/json
-Authorization: Bearer 
-
-{
-    "name": "Paul Dawson",
-    "email": "dawson@gmail.com",
-    "password": "123456"
-}
-
-### Get single user
-GET http://localhost:3000/users/me
-Authorization: Bearer 
-
-
-### Edit a user
-PUT http://localhost:3000/users/
-Content-Type: application/json
-Authorization: Bearer 
-
-{
-    "name": "Paul Dawson Grnds",
-    "email": "dawson@gmail.com",
-    "password": "1234567"
-}
-
-
-### Delete a user
-DELETE http://localhost:3000/users/
-Authorization: Bearer 
-
-
 ### post to login a user
 POST http://localhost:3000/auth/login
 Content-Type: application/json
@@ -84,10 +7,88 @@ Content-Type: application/json
     "password": "123456"
 }
 
+### Add job application
+POST http://localhost:3000/jobs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+
+{
+    "jobTitle": "Frontend Developer Flutter",
+    "company": "Ingest Digital Agency",
+    "jobLink": "www.ingest.job.uk",
+    "status": "interview",
+    "resume": "my-cv-ingest",
+    "coverLetter": "Ingest cover letter"
+}
+
+### Get all job applications available for user
+GET http://localhost:3000/jobs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+
+### get single applications with id
+GET http://localhost:3000/jobs/69c6b171f1806268278b953f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MjkwNjQsImV4cCI6MTc3NDk4OTA2NH0.zzy4GupjT3duA6HF0vFpJJjMOb3KjsmG72mmr-NM4uU
+
+### edit job application with id
+PUT http://localhost:3000/jobs/69c6b171f1806268278b953f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MjkwNjQsImV4cCI6MTc3NDk4OTA2NH0.zzy4GupjT3duA6HF0vFpJJjMOb3KjsmG72mmr-NM4uU
+
+{
+  "jobTitle": "Frontend Developer Flutter",
+  "company": "Ingest Digital Agency",
+  "jobLink": "https://www.ingest.job.ng",
+  "status": "offer",
+  "resume": "my-cv-ingest",
+  "coverLetter": "Ingest cover letter",
+  "dateApplied": "2026-03-27T16:33:53.939Z"
+}
+
+### Delete job application
+DELETE http://localhost:3000/jobs/69c556d55ebbb207c1bd7d5e
+Authorization: Bearer 
+
+
+### Get all users available
+GET http://localhost:3000/users/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+
+### Create user
+POST http://localhost:3000/users/
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "name": "Paula Clara",
+    "email": "paula@gmail.com",
+    "password": "123456"
+}
+
+### Get single user
+GET http://localhost:3000/users/single
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+
+
+### Edit a user
+PUT http://localhost:3000/users/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MjkwNjQsImV4cCI6MTc3NDk4OTA2NH0.zzy4GupjT3duA6HF0vFpJJjMOb3KjsmG72mmr-NM4uU
+
+{
+    "name": "Olanipekun Flavor",
+    "email": "flavor@gmail.com",
+    "password": "123456"
+}
+
+
+### Delete a user
+DELETE http://localhost:3000/users/
+Authorization: Bearer 
+
 
 ### get user
-GET http://localhost:3000/auth/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ1NTcwMTUsImV4cCI6MTc3NDkxNzAxNX0.XZhhYJBP__YzY--CQkFNUJRsJWh3MX0rslENVd2DnJo
+GET http://localhost:3000/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
 
 
 ### logout

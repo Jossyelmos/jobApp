@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "JobApps API",
-    "description": "Job Application API with Authentication",
+    "description": "Job Application API with JWT and GitHub OAuth authentication",
     "version": "1.0.0"
   },
   "host": "jobapp-0udd.onrender.com",
@@ -13,7 +13,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'"
+      "description": "JWT Authorization header using Bearer scheme. Example: 'Bearer {token}' (works for JWT and GitHub OAuth users)"
     },
     "X-Auth-Token": {
       "type": "apiKey",
@@ -26,144 +26,18 @@
     "/": {
       "get": {
         "description": "Welcome endpoint",
-        "responses": {
-          "200": { "description": "OK" }
-        }
+        "responses": { "200": { "description": "Returns welcome message" } }
       }
     },
-    "/auth/login": {
-      "post": {
-        "description": "Login user and get token",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": { "example": "user@example.com" },
-                "password": { "example": "password123" }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Login successful, returns JWT token" },
-          "400": { "description": "Invalid credentials" },
-          "500": { "description": "Server error" }
-        }
-      }
-    },
-    "/auth/": {
-      "get": {
-        "description": "Get currently logged-in user info",
-        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "responses": {
-          "200": { "description": "Returns user info" },
-          "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
-        }
-      }
-    },
-    "/auth/logout": {
-      "post": {
-        "description": "Logout user (client should delete token)",
-        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "responses": {
-          "200": { "description": "Logout successful, token is now client-side removed" },
-          "401": { "description": "Unauthorized" }
-        }
-      }
-    },
-    "/users/": {
-      "post": {
-        "description": "Register new user",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": { "example": "John Doe" },
-                "email": { "example": "john@example.com" },
-                "password": { "example": "password123" }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": { "description": "User created" },
-          "400": { "description": "Bad request" },
-          "500": { "description": "Server error" }
-        }
-      },
-      "get": {
-        "description": "Get all users (Protected)",
-        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "responses": {
-          "200": { "description": "Returns all users" },
-          "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
-        }
-      },
-      "put": {
-        "description": "Update currently logged-in user info (Protected)",
-        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": { "example": "John Doe" },
-                "email": { "example": "john@example.com" },
-                "password": { "example": "newpassword123" },
-                "date": { "example": "2026-03-26" }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": { "description": "User updated" },
-          "400": { "description": "Bad request" },
-          "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
-        }
-      },
-      "delete": {
-        "description": "Delete currently logged-in user (Protected)",
-        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "responses": {
-          "200": { "description": "User deleted" },
-          "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
-        }
-      }
-    },
-    "/users/me": {
-      "get": {
-        "description": "Get current logged-in user info (Protected)",
-        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "responses": {
-          "200": { "description": "Returns current user info" },
-          "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
-        }
-      }
-    },
+
     "/jobs/": {
       "get": {
-        "description": "Get all jobs (Protected)",
+        "description": "Get all jobs for logged-in user (Protected)",
         "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
         "responses": {
           "200": { "description": "Returns all jobs" },
           "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
+          "500": { "description": "Internal server error" }
         }
       },
       "post": {
@@ -181,7 +55,7 @@
                 "company": { "type": "string", "example": "Acme Corp" },
                 "jobLink": { "type": "string", "example": "https://acme.jobs/123" },
                 "status": { "type": "string", "enum": ["applied","interview","rejected","offer"], "example": "applied" },
-                "resume": { "type": "string", "example": "https://mylink.com/resume.pdf" },
+                "resume": { "type": "string", "example": "https://link-to-resume.com/resume.pdf" },
                 "coverLetter": { "type": "string", "example": "I am excited to apply..." },
                 "dateApplied": { "type": "string", "format": "date", "example": "2026-03-26" }
               }
@@ -189,25 +63,24 @@
           }
         ],
         "responses": {
-          "201": { "description": "Job created" },
+          "201": { "description": "Job created successfully" },
           "400": { "description": "Bad request" },
           "401": { "description": "Unauthorized" },
-          "500": { "description": "Server error" }
+          "500": { "description": "Internal server error" }
         }
       }
     },
+
     "/jobs/{id}": {
       "get": {
-        "description": "Get job by ID (Protected)",
+        "description": "Get single job by ID (Protected)",
         "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
-        ],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
         "responses": {
           "200": { "description": "Job found" },
           "401": { "description": "Unauthorized" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Server error" }
+          "404": { "description": "Job not found" },
+          "500": { "description": "Internal server error" }
         }
       },
       "put": {
@@ -234,24 +107,238 @@
           }
         ],
         "responses": {
-          "200": { "description": "Job updated" },
+          "200": { "description": "Job updated successfully" },
           "400": { "description": "Bad request" },
           "401": { "description": "Unauthorized" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Server error" }
+          "404": { "description": "Job not found" },
+          "500": { "description": "Internal server error" }
         }
       },
       "delete": {
         "description": "Delete job by ID (Protected)",
         "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": {
+          "200": { "description": "Job deleted successfully" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Job not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+
+    "/users/": {
+      "post": {
+        "description": "Register a new user",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "example": "John Doe" },
+                "email": { "type": "string", "example": "john@example.com" },
+                "password": { "type": "string", "example": "password123" }
+              }
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Job deleted" },
+          "201": { "description": "User created successfully" },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/users/all": {
+      "get": {
+        "description": "Get all users (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Returns all users" },
           "401": { "description": "Unauthorized" },
-          "404": { "description": "Not Found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/users/single": {
+      "get": {
+        "description": "Get single user (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Returns user info" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "User not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/users/update": {
+      "put": {
+        "description": "Update current user info (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "example": "John Doe" },
+                "email": { "type": "string", "example": "john@example.com" },
+                "password": { "type": "string", "example": "newpassword123" },
+                "date": { "type": "string", "example": "2026-03-26" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "User updated successfully" },
+          "400": { "description": "Bad request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/users/delete": {
+      "delete": {
+        "description": "Delete current user (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "User deleted successfully" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+
+    "/auth/register": {
+      "post": {
+        "description": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string", "example": "John Doe" },
+                "email": { "type": "string", "example": "john@example.com" },
+                "password": { "type": "string", "example": "password123" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "User created successfully" },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+
+    "/auth/login": {
+      "post": {
+        "description": "Login user with email/password",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" },
+                "password": { "type": "string", "example": "password123" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Login successful, returns JWT token" },
+          "400": { "description": "Invalid credentials" },
           "500": { "description": "Server error" }
+        }
+      }
+    },
+
+    "/auth/me": {
+      "get": {
+        "description": "Get current logged-in user info (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Returns current user info" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+
+    "/auth/logout": {
+      "post": {
+        "description": "Logout user (client deletes token) (Protected)",
+        "security": [{ "Bearer": [] }, { "X-Auth-Token": [] }],
+        "responses": {
+          "200": { "description": "Logout successful" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+
+    "/auth/github": {
+      "get": {
+        "description": "Redirect user to GitHub for OAuth login",
+        "responses": {
+          "302": { "description": "Redirect to GitHub login page" }
+        }
+      }
+    },
+
+    "/auth/github/callback": {
+      "get": {
+        "description": "GitHub OAuth callback; returns JWT for OAuth user",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "OAuth code returned by GitHub"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GitHub login successful, returns JWT token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string", "example": "GitHub login successful" },
+                "token": { "type": "string" },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "example": "Jossyelmos" },
+                    "email": { "type": "string", "example": "Jossyelmos@github.com" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+
+    "/api-docs/": {
+      "get": {
+        "description": "Swagger documentation endpoint",
+        "responses": {
+          "200": { "description": "Returns Swagger UI" }
         }
       }
     }

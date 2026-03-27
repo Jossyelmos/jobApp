@@ -7,9 +7,9 @@ const userController = require('../controllers/users');
 router.post("/", userValidator, userController.registerUser); // public
 
 // All routes protected by JWT
-router.get('/', auth, userController.getUsers);
-router.get('/me', auth, userController.getCurrentUser); // current user
-router.put('/', auth, userValidator, userController.updateUser);
-router.delete('/', auth, userController.deleteUser);
+router.get('/all', auth, userController.getUsers);
+router.get('/single', auth, userController.getCurrentUser); // current user
+router.put('/update', auth, userValidator, userController.updateUser);
+router.delete('/delete', auth, userController.deleteUser);
 
 module.exports = router;

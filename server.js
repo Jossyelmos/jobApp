@@ -3,11 +3,23 @@ const express = require('express');
 const connectDb = require('./database/db');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('./config/passport');
 
 
 const app = express();
 
 connectDb();
+
+app.set('trust proxy', 1);
+app.use(session({
+    secret: 'oauth-secret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cors());
 app.use(express.json({ extended: false }));
