@@ -3,10 +3,6 @@ const Validator = require('validatorjs');
 const validateAuth = (req, res, next) => {
   const data = req.body;
 
-//   if (req.body.jobLink && !req.body.jobLink.startsWith('http')) {
-//     req.body.jobLink = 'https://' + req.body.jobLink;
-//   }
-
   const rules = {
     email: 'required|email',
     password: 'required|string|min:6'
