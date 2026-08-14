@@ -1,5 +1,5 @@
 ### post to login a user
-POST http://localhost:3000/auth/login
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
@@ -8,9 +8,9 @@ Content-Type: application/json
 }
 
 ### Add job application
-POST http://localhost:3000/jobs
+POST http://localhost:5000/jobs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM2OTBiZDI2YjlmMWM1MDQ4YzJiOWMiLCJpYXQiOjE3NzgyNDE2NzksImV4cCI6MTc3ODMyODA3OX0.5ZdcxZvjlu3TRG_cgwEr3r-aq_f7-56hWf7FHTkkCOY
 
 {
     "jobTitle": "Frontend Developer Flutter",
@@ -22,12 +22,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1M
 }
 
 ### Get all job applications available for user
-GET http://localhost:3000/jobs
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+GET http://localhost:5000/jobs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3ODY3MDkxMzIsImV4cCI6MTc4NzA2OTEzMn0.n8pGLOiG3yjecXJzmwnic60Dc-suARD0N4c2Ze4pUuc
 
 ### get single applications with id
 GET http://localhost:3000/jobs/69c6b171f1806268278b953f
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MjkwNjQsImV4cCI6MTc3NDk4OTA2NH0.zzy4GupjT3duA6HF0vFpJJjMOb3KjsmG72mmr-NM4uU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM2OTBiZDI2YjlmMWM1MDQ4YzJiOWMiLCJpYXQiOjE3NzYyNTkwMTAsImV4cCI6MTc3NjM0NTQxMH0.-1OfOXS4hZ_vBSVJ-z9P_BECia5SgERnY4fzHLFa6Yc
 
 ### edit job application with id
 PUT http://localhost:3000/jobs/69c6b171f1806268278b953f
@@ -65,8 +65,8 @@ Authorization: Bearer
 }
 
 ### Get single user
-GET http://localhost:3000/users/single
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1MjIxZWZkMjVjZGY3OGE1Yjg2NmUiLCJpYXQiOjE3NzQ2MzI5NDksImV4cCI6MTc3NDk5Mjk0OX0.eRSmTNXyRUm5Cp8cxLN8za0cKTArSRiFPwg0v3tfu3k
+GET http://localhost:5000/users/single
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM2OTBiZDI2YjlmMWM1MDQ4YzJiOWMiLCJpYXQiOjE3NzgyNDE2NzksImV4cCI6MTc3ODMyODA3OX0.5ZdcxZvjlu3TRG_cgwEr3r-aq_f7-56hWf7FHTkkCOY
 
 
 ### Edit a user
@@ -92,5 +92,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWM1M
 
 
 ### logout
-POST http://localhost:3000/auth/logout
+POST http://localhost:5000/auth/logout
 Authorization: Bearer 

@@ -38,23 +38,43 @@ router.get('/github',
 );
 
 // GitHub callback
-router.get('/github/callback',
-    passport.authenticate('github', { failureRedirect: '/' }),
+// router.get('/github/callback',
+//     passport.authenticate('github', { failureRedirect: '/' }),
+//     (req, res) => {
+//         // Generate JWT for OAuth user
+//         const token = jwt.sign(
+//             { userId: req.user._id },
+//             process.env.JWT_SECRET,
+//             { expiresIn: '1d' }
+//         );
+
+//         // Send token and user info back
+//         res.redirect(
+//             `http://localhost:3000?token=${token}`
+//         );
+//     }
+// );
+
+
+router.get(
+    "/github/callback",
+    passport.authenticate("github", { failureRedirect: "/" }),
     (req, res) => {
-        // Generate JWT for OAuth user
-        const token = jwt.sign(
-            { userId: req.user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: '1d' }
-        );
-
-        // Send token and user info back
-        res.json({
-            message: 'GitHub login successful',
-            token,
-            user: { name: req.user.name, email: req.user.email }
-        });
+  
+      console.log("CALLBACK HIT");
+      console.log("USER:", req.user);
+  
+      const token = jwt.sign(
+        { userId: req.user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+      );
+  
+      console.log("TOKEN GENERATED:", token);
+  
+      return res.redirect(
+        `http://localhost:3000/?token=${token}`
+      );
     }
-);
-
+  );
 module.exports = router;
